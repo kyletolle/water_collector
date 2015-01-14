@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Water Source Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      html, body, #map {
+        height: 100%;
+      }
+      .topcorner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 25px;
+        background: #fff;
+        text-align: center;
+      }
+    </style>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="topcorner"><span class="gallon-amount">0</span> gallons collected</div>
+
+    <script type="text/javascript">
+      var map = L.map('map').setView([39.862564285, -104.917523860], 15);
+
+      // Set basemap
+      // http://switch2osm.org/using-tiles/getting-started-with-leaflet/
+      var osmUrl    = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      var osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+      var osm       = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 20, attribution: osmAttrib})
+
+      map.addLayer(osm);
+
+      // Get GeoJSON file with feature
+      // Thanks http://youmightnotneedjquery.com for the no-jquery way!
+      var request = new XMLHttpRequest();
+      request.open('GET', 'water_source.geojson', true);
+
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          // Success!
+          var geojson      = JSON.parse(request.responseText);
+          var style = {
+                        color: '#f00',
+                        opacity: 0.8,
+                        fillColor: '#f00',
+                        fillOpacity: 0.6
+                      };
+
+          var onEachFeature = function (feature, layer) {
+              layer.on({click: function(layer) {
+                var gallonElement = document.querySelectorAll('.gallon-amount')[0];
+                var gallonString = gallonElement.innerHTML;
+                var gallonInt = parseInt(gallonString, 10);
+                gallonInt += 10;
+                gallonElement.innerHTML = gallonInt.toString();
+              }});
+          }
+
+          var waterSource  = new L.geoJson(geojson, {style: style, onEachFeature: onEachFeature});
+          map.addLayer(waterSource);
+        } else {
+          // We reached our target server, but it returned an error
+        }
+      };
+
+      request.onerror = function() {
+        console.log("there was a connection error and we couldn't fetch the geojson");
+      };
+
+      request.send();
+    </script>
+  </body>
+</html>
