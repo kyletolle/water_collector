@@ -30,10 +30,11 @@ var WaterTap = L.Class.extend({
     // This is equivalent to the => (fat arrow) in Coffeescript.
     this.marker.on({click: (function(_this) {
       return function(event) {
-        amountCollected = _this.collect();
+        amountCollected   = _this.collect();
         var gallonElement = document.querySelectorAll('.gallon-amount')[0];
-        var gallonString = gallonElement.innerHTML;
-        var gallonInt = parseInt(gallonString, 10);
+        var gallonString  = gallonElement.innerHTML;
+        var gallonInt     = parseInt(gallonString, 10);
+
         gallonInt += amountCollected;
         gallonElement.innerHTML = gallonInt.toString();
       }
