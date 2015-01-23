@@ -17,7 +17,7 @@ var WaterTap = L.Class.extend({
     this.layer = layer;
     this.lastTimeCollected = Date.now();
     this.centroid = this.layer.getBounds().getCenter();
-    this.icon = L.icon({iconUrl: 'images/tap_water.png', iconSize: [32, 32]});
+    this.icon = L.icon({iconUrl: 'images/tap-white.png', iconSize: [32, 32]});
     this.marker = L.marker(this.centroid, {icon: this.icon});
   },
 
