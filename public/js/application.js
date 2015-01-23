@@ -2,11 +2,11 @@ var map = L.map('map').setView([39.862564285, -104.917523860], 15);
 
 // Set basemap
 // http://switch2osm.org/using-tiles/getting-started-with-leaflet/
-var osmUrl    = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-var osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-var osm       = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 20, attribution: osmAttrib})
+var stamenUrl    = 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
+var stamenAttrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.';
+var stamen       = L.tileLayer(stamenUrl, {attribution: stamenAttrib});
 
-map.addLayer(osm);
+map.addLayer(stamen);
 
 var WaterTap = L.Class.extend({
   statics: {
