@@ -7,6 +7,15 @@ per second per tap.
 
 See the total add up as you collect water from various taps.
 
+## Run Locally
+
+```
+bundle install
+rackup
+```
+
+Then visit `localhost:9292` in your browser!
+
 ## Data
 
 The geometries of water sources is from OpenStreetMap, and the data is made available under ODbL. © OpenStreetMap contributors
