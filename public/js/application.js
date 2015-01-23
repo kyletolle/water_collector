@@ -25,6 +25,8 @@ var WaterTap = L.Class.extend({
     this.map = map;
     this.marker.addTo(map);
 
+    this.layer.setStyle({color: '#00f', fillColor: '#00f'});
+
     // This is equivalent to the => (fat arrow) in Coffeescript.
     this.marker.on({click: (function(_this) {
       return function(event) {
