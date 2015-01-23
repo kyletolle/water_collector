@@ -12,6 +12,10 @@ Specifically, this is the query for OSM water/lakes in the Thornton, CO area:
 
 http://overpass-turbo.eu/s/71J
 
+## Icon
+
+Not mine. Freeware. Downloaded from http://findicons.com/icon/462878/tap_water?id=462912
+
 ## License
 
 MIT
