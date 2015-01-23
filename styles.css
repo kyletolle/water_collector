@@ -1,0 +1,18 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+html, body, #map {
+  height: 100%;
+}
+
+.topcorner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 25px;
+  background: #fff;
+  text-align: center;
+}
+
