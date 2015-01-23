@@ -7,6 +7,10 @@ per second per tap.
 
 See the total add up as you collect water from various taps.
 
+## Demo
+
+https://water-collector.herokuapp.com
+
 ## Run Locally
 
 ```
