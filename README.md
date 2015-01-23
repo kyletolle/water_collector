@@ -1,5 +1,12 @@
 # Water Collector
 
+Click on one of the water features to add a water tap.
+
+Then click on the water tap icon to collect water. 1 gallon is accumulated
+per second per tap.
+
+See the total add up as you collect water from various taps.
+
 ## Data
 
 The geometries of water sources is from OpenStreetMap, and the data is made available under ODbL. © OpenStreetMap contributors
