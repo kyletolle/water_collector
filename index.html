@@ -23,6 +23,47 @@
 
       map.addLayer(osm);
 
+      var WaterTap = L.Class.extend({
+        statics: {
+          GALLONS_PER_SECOND: 1
+        },
+
+        initialize: function (layer) {
+          this.layer = layer;
+          this.lastTimeCollected = Date.now();
+          this.centroid = this.layer.getBounds().getCenter();
+          this.icon = L.icon({iconUrl: 'tap_water.png', iconSize: [32, 32]});
+          this.marker = L.marker(this.centroid, {icon: this.icon});
+        },
+
+        addTo: function(map) {
+          this.map = map;
+          this.marker.addTo(map);
+
+          // This is equivalent to the => (fat arrow) in Coffeescript.
+          this.marker.on({click: (function(_this) {
+            return function(event) {
+              amountCollected = _this.collect();
+              var gallonElement = document.querySelectorAll('.gallon-amount')[0];
+              var gallonString = gallonElement.innerHTML;
+              var gallonInt = parseInt(gallonString, 10);
+              gallonInt += amountCollected;
+              gallonElement.innerHTML = gallonInt.toString();
+            }
+          })(this)});
+        },
+
+        collect: function() {
+          var currentTime = Date.now();
+          var millisecondsElapsed = currentTime - this.lastTimeCollected;
+          var secondsElapsed = Math.floor(millisecondsElapsed/1000);
+
+          this.lastTimeCollected = currentTime;
+
+          return secondsElapsed * WaterTap.GALLONS_PER_SECOND;
+        }
+      });
+
       // Get GeoJSON file with feature
       // Thanks http://youmightnotneedjquery.com for the no-jquery way!
       var request = new XMLHttpRequest();
@@ -40,13 +81,10 @@
                       };
 
           var onEachFeature = function (feature, layer) {
-              layer.on({click: function(layer) {
-                var gallonElement = document.querySelectorAll('.gallon-amount')[0];
-                var gallonString = gallonElement.innerHTML;
-                var gallonInt = parseInt(gallonString, 10);
-                gallonInt += 10;
-                gallonElement.innerHTML = gallonInt.toString();
-              }});
+            layer.on({click: function(event) {
+              var waterTap = new WaterTap(layer)
+              waterTap.addTo(map);
+            }});
           }
 
           var waterSource  = new L.geoJson(geojson, {style: style, onEachFeature: onEachFeature});
